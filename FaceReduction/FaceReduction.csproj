@@ -1,0 +1,654 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\build\OpenCvSharp3-AnyCPU.props" Condition="Exists('..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\build\OpenCvSharp3-AnyCPU.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E001E837-4059-4BED-B69A-BB109306BE48}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>FaceReduction</RootNamespace>
+    <AssemblyName>FaceReduction</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Emgu.CV.UI, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.World, Version=3.4.3.3016, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <HintPath>..\packages\EMGU.CV.3.4.3.3016\lib\net35\Emgu.CV.World.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\TSFaceDetection\TSFaceDetection\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\lib\net46\OpenCvSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Blob, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\lib\net46\OpenCvSharp.Blob.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\lib\net46\OpenCvSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.UserInterface, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\lib\net46\OpenCvSharp.UserInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TSFaceDetection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\TSFaceDetection.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DetectFace.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\Emgu.CV.Affine3d.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.AlgorithmExtensions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.AlignExposures.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.AlignMTB.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.ArucoInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.CharucoBoard.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.DetectorParameters+RefinementMethod.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.DetectorParameters.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.Dictionary+PredefinedDictionaryName.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.Dictionary.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.GridBoard.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Aruco.IBoard.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BackgroundSubtractorExtension.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BackgroundSubtractorKNN.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BackgroundSubtractorMOG2.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BgSegm.BackgroundSubtractorCNT.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BgSegm.BackgroundSubtractorGMG.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BgSegm.BackgroundSubtractorGSOC.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BgSegm.BackgroundSubtractorLSBP+CameraMotionCompensation.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BgSegm.BackgroundSubtractorLSBP.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.BgSegm.BackgroundSubtractorMOG.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Bioinspired.BioinspiredInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Bioinspired.Retina+ColorSamplingMethod.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Bioinspired.Retina+IplMagnoParameters.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Bioinspired.Retina+OPLandIplParvoParameters.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Bioinspired.Retina+RetinaParameters.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Bioinspired.Retina.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CalibrateCRF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CalibrateDebevec.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CalibrateRobertson.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CameraCalibration.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CascadeClassifier.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ColorInfoAttribute.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ContribInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ConvolutionKernelF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.ColumnSumFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBackgroundSubtractorMOG.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBackgroundSubtractorMOG2.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBFMatcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBoxFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBoxMaxFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBoxMinFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaBroxOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaCannyEdgeDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaCascadeClassifier.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaClahe.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaCornernessCriteria.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaDensePyrLKOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaDerivFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaDeviceInfo+GpuFeature.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaDeviceInfo.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaDisparityBilateralFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaFarnebackOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaFastFeatureDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaGaussianFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaGoodFeaturesToTrackDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaHarrisCorner.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaHOG+DescrFormat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaHOG.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaHoughCirclesDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaHoughLinesDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaHoughSegmentDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaLaplacianFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaLinearFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaLookUpTable.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaMinEigenValCorner.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaMorphologyFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaOpticalFlowDualTvl1.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaORBDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaSobelFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaSparsePyrLKOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaStereoBM.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaStereoConstantSpaceBP.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.CudaTemplateMatching.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.DescriptorMatcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.Feature2DAsyncExtension.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.GpuMat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.ICudaDenseOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.ICudaSparseOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.IFeature2DAsync.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.MedianFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.RowSumFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.ScharrFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.SeparableLinearFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.Stream.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.TargetArchs.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cuda.VectorOfGpuMat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvBlob+Moments.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvBlob.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvBlobDetector+BlobRenderType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvBlobDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvBlobs.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvTrack.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Cvb.CvTracks.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CvInvoke+CvErrorCallback.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CvInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.CvString.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.DenseHistogram.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.DenseOpticalFlowExtensions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.DISOpticalFlow+Preset.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.DISOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Dnn.DnnInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Dnn.Net.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Dpm.DpmDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Dpm.DpmInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Dpm.ObjectDetection.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.DualTVL1OpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ExtrinsicCameraParameters.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.BIF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.EigenFaceRecognizer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FaceInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FacemarkAAM.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FacemarkAAMParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FacemarkLBF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FacemarkLBFParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FaceRecognizer+PredictionResult.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FaceRecognizer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.FisherFaceRecognizer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.IFacemark.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Face.LBPHFaceRecognizer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.FarnebackOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.AgastFeatureDetector+Type.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.AgastFeatureDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.AKAZE+DescriptorType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.AKAZE.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.BFMatcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.BOWImgDescriptorExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.BOWKMeansTrainer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.Brisk.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.DescriptorMatcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.FastDetector+DetectorType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.FastDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.Feature2D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.Features2DInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.Features2DToolbox+KeypointDrawType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.Features2DToolbox.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.FlannBasedMatcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.GFTTDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.KAZE+Diffusivity.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.KAZE.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.MSERDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.ORBDetector+ScoreType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.ORBDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.SimpleBlobDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Features2D.SimpleBlobDetectorParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.FileNode+Type.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.FileNode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.FileStorage+Mode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.FileStorage.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Fisheye+CalibrationFlag.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Fisheye.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.AutotunedIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.CompositeIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.HierarchicalClusteringIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.IIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.Index.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.Index3D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.KdTreeIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.KMeansIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.LinearIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.LshIndexParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Flann.SearchParams.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Fuzzy.FuzzyInvoke+Function.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Fuzzy.FuzzyInvoke+InpaintAlgorithm.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Fuzzy.FuzzyInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Geodetic.GeodeticCoordinate.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.HOGDescriptor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IAlgorithm.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IBackgroundSubtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ICapture.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IColor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IConvexPolygon.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IConvexPolygonF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IDenseOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IDuplexCapture.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IDuplexCaptureCallback.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IImage.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IInputArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IInputArrayExtensions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IInputArrayOfArrays.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IInputOutputArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.AverageHash.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.BlockMeanHash+Mode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.BlockMeanHash.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.ColorMomentHash.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.ImgHashBase.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.MarrHildrethHash.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.PHash.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ImgHash.RadialVarianceHash.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.InputArray+Type.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.InputArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.InputOutputArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IntrinsicCameraParameters.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IOutputArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IOutputArrayOfArrays.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ISparseOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IStereoMatcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IWidget.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IWidget2D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.IWidget3D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.KalmanFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.LineDescriptor.BinaryDescriptor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.LineDescriptor.LineDescriptorInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.LineDescriptor.LSDDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.LineDescriptor.MKeyLine.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.LineDescriptor.VectorOfKeyLine.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Mat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.MatDataAllocator.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.MergeDebevec.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.MergeExposures.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.MergeMertens.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.MergeRobertson.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.ANN_MLP+AnnMlpActivationFunction.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.ANN_MLP+AnnMlpTrainMethod.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.ANN_MLP.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.Boost+Type.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.Boost.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.DTrees.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.EM+CovarianMatrixType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.EM.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.IStatModel.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.KNearest.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.LogisticRegression+RegularizationMethod.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.LogisticRegression+TrainType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.LogisticRegression.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.MCvParamGrid.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.MlInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.NormalBayesClassifier.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.RTrees.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.StatModelExtensions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVM+ParamType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVM+SvmKernelType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVM+SvmType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVM.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVMSGD+MarginType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVMSGD+SvmsgdType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.SVMSGD.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ML.TrainData.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.MotionHistory.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.Device.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.Image2D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.Kernel.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.KernelArg+Flags.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.KernelArg.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.OclInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.PlatformInfo.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.ProgramSource.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Ocl.Queue.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.ITessResultRenderer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.OcrInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.Orientation.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.PageIterator.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.PDFRenderer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.Pix.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.Tesseract+Character.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.Tesseract.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.TesseractResult.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OCR.VectorOfTesseractResult.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OptFlowDeepFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OpticalFlowPCAFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.OutputArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.PhaseUnwrapping.HistogramPhaseUnwrapping.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.PhaseUnwrapping.PhaseUnwrappingInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Plot.Plot2d.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Plot.PlotInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.PointCollection.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Quaternions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Reflection.ExposableMethodAttribute.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Reflection.GenericParameter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Reflection.ReflectColorType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Reflection.ReflectIImage.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.RotationMatrix2D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.RotationVector3D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.IMotionSaliency.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.IObjectness.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.ISaliency.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.IStaticSaliency.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.MotionSaliencyBinWangApr2014.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.ObjectnessBING.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.SaliencyInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.StaticSaliencyFineGrained.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Saliency.StaticSaliencySpectralResidual.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.ScalarArray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.AffineTransformer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.ChiHistogramCostExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.EMDHistogramCostExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.EMDL1HistogramCostExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.HausdorffDistanceExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.HistogramCostExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.IShapeTransformer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.NormHistogramCostExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.ShapeContextDistanceExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.ShapeDistanceExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.ShapeInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Shape.ThinPlateSplineShapeTransformer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.SparseOpticalFlowExtensions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.SparsePyrLKOpticalFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.StereoBM.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.StereoMatcherExtensions.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.StereoSGBM+Mode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.StereoSGBM.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.AKAZEFeaturesFinder.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.CompressedRectilinearWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.FeaturesFinder.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.FisheyeWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.MercatorWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.OrbFeaturesFinder.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.PaniniPortraitWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.PaniniWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.PlaneWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.SphericalWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.StereographicWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.Stitcher+Mode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.Stitcher+Status.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.Stitcher+WaveCorrectionType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.Stitcher.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.StitchingInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.TransverseMercatorWarper.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Stitching.WarperCreator.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Bgr.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Bgr565.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Bgra.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.CircleF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.ColorPoint.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Cross2DF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Cuboid.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.CvStructSizes.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Ellipse.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Gray.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Hls.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Hsv.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Lab.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.LineSegment2D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.LineSegment2DF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.LineSegment3DF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Luv.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvAvgComp.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvMat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvMatND+Dimension.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvMatND.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvMoments.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvObjectDetection.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvPoint2D64f.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvPoint3D32f.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvPoint3D64f.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvScalar.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvSlice.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MCvTermCriteria.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MDMatch.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MIplImage.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.MKeyPoint.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Range.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.RangeF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Rgb.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Rgba.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.RotatedRect.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Triangle2DF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Triangle3DF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Xyz.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Structure.Ycc.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Subdiv2D.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Superres.FrameSource.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Superres.SuperResolution+OpticalFlowType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Superres.SuperResolution.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.ERFilter+GroupingMethod.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.ERFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.ERFilterNM1.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.ERFilterNM2.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.MCvERStat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.TextInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.VectorOfERStat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Text.VectorOfVectorOfERStat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tonemap.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.TonemapDrago.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.TonemapDurand.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.TonemapMantiuk.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.TonemapReinhard.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.MultiTracker.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.Tracker.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerBoosting.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerCSRT.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerGOTURN.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerKCF+Mode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerKCF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerMedianFlow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerMIL.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerMOSSE.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Tracking.TrackerTLD.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.HistogramBox.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.HistogramViewer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.ImageBox+FunctionalModeOption.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.ImageBox.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.ImageViewer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.MatrixBox.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.MatrixViewer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.Operation.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UI.PanAndZoomPictureBox.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UMat+Usage.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.UMat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.CvException.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.CvToolbox.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.DataLogger.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.StructSize.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.TbbTaskScheduler.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfByte.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfColorPoint.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfCvString.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfDMatch.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfDouble.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfFloat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfInt.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfKeyPoint.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfMat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfOclPlatformInfo.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfPoint.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfPoint3D32F.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfPointF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfRect.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfTriangle2DF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfUMat.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfVectorOfDMatch.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfVectorOfInt.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfVectorOfPoint.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfVectorOfPoint3D32F.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Util.VectorOfVectorOfPointF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VariationalRefinement.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoCapture+CaptureModuleType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoCapture.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoStab.CaptureFrameSource.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoStab.FrameSource.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoStab.GaussianMotionFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoStab.OnePassStabilizer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoStab.TwoPassStabilizer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoWriter+WriterProperty.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VideoWriter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.Viz3d.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.VoronoiFacet.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WArrow.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WCircle.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WCloud.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WCone.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WCoordinateSystem.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WCube.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WCylinder.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.WText.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.BoostDesc+DescriptorType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.BoostDesc.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.BriefDescriptorExtractor.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.CudaSURF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.DAISY+NormalizationType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.DAISY.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.Freak.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.HarrisLaplaceFeatureDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.LATCH.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.LUCID.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.MSDDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.PCTSignatures+PointDistributionType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.PCTSignatures.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.PCTSignaturesSQFD+DistanceFunction.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.PCTSignaturesSQFD+SimilarityFunction.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.PCTSignaturesSQFD.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.SIFT.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.StarDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.SURF.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.VGG+DescriptorType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.VGG.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XFeatures2D.XFeatures2DInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.DTFilter+Mode.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.DTFilter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.GraphSegmentation.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.RFFeatureGetter.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.SelectiveSearchSegmentation.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.StructuredEdgeDetection.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.SuperpixelLSC.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.SupperpixelSEEDS.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.SupperpixelSLIC+Algorithm.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.SupperpixelSLIC.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XImgproc.XImgprocInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XObjdetect.WBDetector.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XObjdetect.XObjdetectInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XPhoto.GrayworldWB.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XPhoto.LearningBasedWB.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XPhoto.SimpleWB.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XPhoto.WhiteBalancer.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XPhoto.XPhotoInvoke+InpaintType.datasource" />
+    <None Include="Properties\DataSources\Emgu.CV.XPhoto.XPhotoInvoke.datasource" />
+    <None Include="Properties\DataSources\Emgu.Util.DisposableObject.datasource" />
+    <None Include="Properties\DataSources\Emgu.Util.ICodeGenerable.datasource" />
+    <None Include="Properties\DataSources\Emgu.Util.Platform.datasource" />
+    <None Include="Properties\DataSources\Emgu.Util.Toolbox.datasource" />
+    <None Include="Properties\DataSources\Emgu.Util.UnmanagedObject.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="cvextern.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haarcascade_eye.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="haarcascade_frontalface_default.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>此專案參考這部電腦上所缺少的 NuGet 套件。請啟用 NuGet 套件還原，以下載該套件。如需詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的檔案是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets'))" />
+    <Error Condition="!Exists('..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\build\OpenCvSharp3-AnyCPU.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\OpenCvSharp3-AnyCPU.3.4.1.20180830\build\OpenCvSharp3-AnyCPU.props'))" />
+  </Target>
+  <Import Project="..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets" Condition="Exists('..\packages\EMGU.CV.3.4.3.3016\build\EMGU.CV.targets')" />
+</Project>
